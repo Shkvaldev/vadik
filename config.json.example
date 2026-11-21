@@ -1,0 +1,6 @@
+{
+  "openai_api_base": "http://192.168.x.x:9931/v1",
+  "openai_api_token": "your api key",
+  "model": "your model",
+  "system_prompt": ""
+}
