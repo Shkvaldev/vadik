@@ -17,23 +17,14 @@ import (
 
 var (
 	configPath string
-	mode       string
-	enableAPI  string
 )
 
 func main() {
 	flag.StringVar(&configPath, "config", "config.json", "config file path in json")
-	flag.StringVar(&configPath, "mode", "normal", "working mode (tiny, normal, programmer)")
-	flag.StringVar(&configPath, "api", "", "REST API connect string (ex. 127.0.0.1:8000, '' default, means API is disabled)")
 
 	flag.Parse()
 	// Loading OpenAI API data
 	cfg := core.ConfigFromFile(configPath)
-
-	// Starting REST API
-	if len(enableAPI) > 0 {
-		log.Println("WARNING! REST API is not implemented yet!")
-	}
 
 	// Initialization of agent
 	provider, err := openai.New(
