@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/voocel/litellm"
 	"github.com/voocel/litellm/provider/openai"
@@ -18,6 +20,14 @@ import (
 var (
 	configPath string
 )
+
+// HandleExit handles agent stop
+func HandleExit(messages []litellm.Message) {
+	// Exit logic here
+	fmt.Println()
+	fmt.Println("Exitting ...")
+	os.Exit(0)
+}
 
 func main() {
 	flag.StringVar(&configPath, "config", "config.json", "config file path in json")
@@ -48,6 +58,14 @@ func main() {
 		litellm.System(cfg.SystemPrompt),
 	}
 
+	// Handling exit
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		<-sigs
+		HandleExit(messages)
+	}()
+
 	// Main loop
 	scanner := bufio.NewScanner(os.Stdin)
 	prompt := ""
@@ -57,8 +75,7 @@ func main() {
 		if !wasToolCalled {
 			fmt.Print("\n[Prompt] << ")
 			if !scanner.Scan() {
-				fmt.Println("Bye ...")
-				break
+				HandleExit(messages)
 			}
 			prompt = scanner.Text()
 			if len(prompt) <= 0 {
