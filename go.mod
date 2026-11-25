@@ -1,6 +1,6 @@
 module vadik
 
-go 1.27.3
+go 1.26.0
 
 require github.com/voocel/litellm v1.9.6
 

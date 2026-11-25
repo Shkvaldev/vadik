@@ -1,0 +1,12 @@
+FROM golang:1.26-alpine as builder
+WORKDIR /app
+COPY go.mod .
+COPY ./litellm .
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -o vadik main.go
+
+FROM alpine:latest
+WORKDIR /app
+COPY --from=builder /app/vadik /app/vadik
+ENTRYPOINT ["/app/vadik"]

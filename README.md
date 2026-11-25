@@ -18,4 +18,14 @@ There are two modes now:
 Just fill in `config.json` and execute:
 ```bash
 go run main.go -config your_config.json
-``` 
+```
+You can also run `vadik` in docker container:
+```bash
+sudo docker run --rm -it -v ./config.json:/app/config.json:ro vadik
+```
+
+## How to build?
+Via docker:
+```bash
+sudo docker build -t vadik -f docker/Dockerfile.build .
+```

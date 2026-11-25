@@ -12,7 +12,7 @@ type VadikConfig struct {
 	OpenAIAPIBase  string `json:"openai_api_base"`
 	OpenAIAPIToken string `json:"openai_api_token"`
 	Model          string `json:"model"`
-	SystemPrompt   string `json: "system_prompt"`
+	SystemPrompt   string `json:"system_prompt"`
 	SecurityLevel  int    `json:"security_level"` // 0 - disabled, 1 - basic
 }
 
