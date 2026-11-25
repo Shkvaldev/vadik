@@ -6,12 +6,16 @@
 - Learn how AI agents work
 
 ## TODO
-- SECURITY POLICIES, IT IS DANGEROUS TO USE THIS AGENT NOW!!!
 - Rate limiting
 - Static builds
 
+## Security levels
+There are two modes now:
+- `0` (agent does everything without confirmation)
+- `1` (agent asks before execute every command/writing file)
+
 ## How to run?
-Just execute:
+Just fill in `config.json` and execute:
 ```bash
 go run main.go -config your_config.json
 ``` 

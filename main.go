@@ -95,7 +95,7 @@ func main() {
 				messages = append(messages, litellm.ToolResultText(toolIdName, "tool not found!"))
 				continue
 			}
-			result := toolFunc(tool)
+			result := toolFunc(*cfg, tool)
 			fmt.Printf("\n[CALL] %v: %v\n", toolIdName, result)
 			messages = append(messages, litellm.ToolResultText(toolIdName, result))
 		}

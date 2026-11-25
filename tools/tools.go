@@ -2,6 +2,7 @@ package tools
 
 import (
 	"github.com/voocel/litellm"
+	"vadik/core"
 )
 
 // Tools list
@@ -11,7 +12,7 @@ var Tools []litellm.Tool = []litellm.Tool{
 	WriteFileRule,
 }
 
-type ToolFunc func(call litellm.ToolUseBlock) string
+type ToolFunc func(cfg core.VadikConfig, call litellm.ToolUseBlock) string
 
 var ToolsMap map[string]ToolFunc = map[string]ToolFunc{
 	RunShellRule.Name:  RunShellTool,

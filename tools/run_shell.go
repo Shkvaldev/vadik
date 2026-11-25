@@ -7,6 +7,8 @@ import (
 	"os/exec"
 	"time"
 
+	"vadik/core"
+
 	"github.com/voocel/litellm"
 )
 
@@ -24,8 +26,8 @@ var RunShellRule, _ = litellm.NewTool(
 	})
 
 // Shell cmd tool function
-// BUG: THERE IS NO SECURITY!!! ADD AS SOON AS POSSIBLE!!!
-func RunShellTool(call litellm.ToolUseBlock) string {
+// TODO: Make security policy more flexible
+func RunShellTool(cfg core.VadikConfig, call litellm.ToolUseBlock) string {
 	var args struct {
 		Command string `json:"command"`
 		Timeout int    `json:"timeout"`
@@ -41,9 +43,15 @@ func RunShellTool(call litellm.ToolUseBlock) string {
 		timeout = time.Duration(args.Timeout) * time.Second
 	}
 
+	// Security policy
+	if cfg.SecurityLevel == 1 {
+		if !StdAskCallback(fmt.Sprintf("execute `%v`?", args.Command)) {
+			return fmt.Sprintf("`%v` call was denied by user", args.Command)
+		}
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-
 	cmd := exec.CommandContext(ctx, "sh", "-c", args.Command)
 	out, err := cmd.CombinedOutput()
 	if err != nil {

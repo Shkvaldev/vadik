@@ -13,10 +13,11 @@ type VadikConfig struct {
 	OpenAIAPIToken string `json:"openai_api_token"`
 	Model          string `json:"model"`
 	SystemPrompt   string `json: "system_prompt"`
+	SecurityLevel  int    `json:"security_level"` // 0 - disabled, 1 - basic
 }
 
 func (c VadikConfig) String() string {
-	return fmt.Sprintf("Config [base=%v, model=%v]", c.OpenAIAPIBase, c.Model)
+	return fmt.Sprintf("Config [base=%v, model=%v, security=%v]", c.OpenAIAPIBase, c.Model, c.SecurityLevel)
 }
 
 // ConfigFromFile reads json cfg from file, returns config struct

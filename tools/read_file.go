@@ -3,9 +3,9 @@ package tools
 import (
 	"encoding/json"
 	"fmt"
-	"os"
-
 	"github.com/voocel/litellm"
+	"os"
+	"vadik/core"
 )
 
 // Read file tool rule
@@ -21,7 +21,7 @@ var ReadFileRule, _ = litellm.NewTool(
 	})
 
 // Read file tool function
-func ReadFileTool(call litellm.ToolUseBlock) string {
+func ReadFileTool(cfg core.VadikConfig, call litellm.ToolUseBlock) string {
 	var args struct {
 		Path string `json:"path"`
 	}
